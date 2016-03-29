@@ -17,7 +17,7 @@ All the informations stored are exportable as cvs file and functions for LaTeX c
 ## Tecnologies and languages involved
 The core is build through the CMS [Keystone.js](http://keystonejs.com/) which is based on [express.js](http://expressjs.com/) and [MongoDB](https://www.mongodb.org/), indeed the database is a MongoDB instance. The Node.js server is deployed on [Openshift](https://www.openshift.com/), while the database runs on [mlab.com](mlab.com), that's because I'm using an openshift free plan and hosting both of the components there would exceed the maxium storage available :/ .
 
-The HTML is built using the template language [Nunkjucks.js](https://mozilla.github.io/nunjucks/) ( my favorite one right now ) and rendered serverside by express.js.
+The HTML is built using the template language [Nunjucks.js](https://mozilla.github.io/nunjucks/) ( my favorite one right now ) and rendered serverside by express.js.
 
 I went for [Bootstrap](http://getbootstrap.com/) as CSS framework, using the Sass distribution and compiling it myself, as well as my own .scss files (not a lot truth be told), through [gulp.js](http://gulpjs.com/) build system.
 
