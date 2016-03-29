@@ -1,0 +1,45 @@
+{% extends "layouts/base.html" %}
+
+{% block css%}
+  <link rel="stylesheet" href="/stylesheets/home.css" media="screen" title="no title" charset="utf-8">
+{% endblock%}
+
+{% block content %}
+<main>
+  <header>
+    <h1 class="page-header">Mnemosyne <small>applicativo per memorizzare requisiti, casi d'uso e test.</small></h1>
+  </header>
+    <section class="container-fluid">
+      <header>
+        <h2>Visualizza e modifica le informazioni in memoria</h2>
+      </header>
+        <div class="row">
+          <article class="col-sm-5">
+            <h3>Attori</h3>
+            <img src="actor.gif" alt="" />
+            <p>Tutte le infomazioni riguardanti gli Attori che compaiono nei Casi d'uso e le relazioni tra di essi .</p>
+            <a class="btn btn-default" href="/actors">Visualizza Attori</a>
+            <a class="btn btn-default" href="/keystone/actors">Modifica Attori</a>
+          </article>
+          <article class="col-sm-5">
+            <h3>Casi d'uso</h3>
+            <img src="usecase.png"  alt="" />
+            <p>Tutte le infomazioni riguardandi i Casi d'uso e le loro dipendenze.</p>
+            <a class="btn btn-default" href="/usecases">Visualizza Casi d'uso</a>
+            <a class="btn btn-default" href="/keystone/use-cases">Modifica Casi d'uso</a>
+          </article>
+          <article class="col-sm-5">
+            <h3>Requisiti</h3>
+            <img src="requirements.png" alt="" />
+            <p>Tutte le infomazioni riguardanti i Requisiti, le loro fonti e il tracciamento.</p>
+            <a class="btn btn-default" href="/requisiti">Visualizza Requisiti</a>
+            <a class="btn btn-default" href="/keystone/requisitis">Modifica Requisiti</a>
+          </article>
+        </div>
+    </section>
+  </main>
+{% endblock %}
+{% block footer %}
+
+
+{% endblock %}

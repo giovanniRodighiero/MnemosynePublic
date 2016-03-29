@@ -1,0 +1,72 @@
+{% extends "layouts/base.html" %}
+{% import "stampe.html" as stampa %}
+
+{% block css%}
+  <link rel="stylesheet" href="/stylesheets/requisiti.css" media="screen" title="no title" charset="utf-8">
+{% endblock%}
+
+{% block content %}
+<header class="page-header">
+  <h1>Requisiti, <small>tutte le informazioni sui requisiti. <br>
+    <a class="btn-lg btn-success" href="keystone/requisitis" role="button">Gestisci Requisiti</a>
+  </small> </h1>
+</header>
+<main class="container-fluid">
+  <section id="menu" class="row">
+    <div  class="col-sm-6">
+      <ul>
+        {% for reqs in requisiti %}
+          <li><a href="#{{reqs[0].tipologia}}">{{reqs[0].tipologia}}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div id="tracciamento" class="col-sm-6">
+      <a class="btn-lg btn-info" href="/tracciamento" role="button">Vai al Tracciamento</a>
+    </div>
+  </section>
+  {% for reqs in requisiti %}
+  <section id="{{reqs[0].tipologia}}" class="tipo">
+    <h2>Requisiti {{reqs[0].tipologia}}</h2>
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal{{reqs[0].tipologia}}">
+    Genera LaTeX
+    </button>
+    <div class="modal fade" id="modal{{reqs[0].tipologia}}" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <button type="button" class="btn btn-success" id="create{{reqs[0].tipologia}}"
+              onclick="download('requisiti{{reqs[0].tipologia}}.tex', '#content{{reqs[0].tipologia}}' );">Crea file da scaricare</button>
+          </div>
+          <div class="modal-body">
+            <h3 class="modal-title">Requisiti {{reqs[0].tipologia}}</h3>
+            <figure >
+                <code id="content{{reqs[0].tipologia}}">
+                  {{ stampa.AllRequisiti(reqs) }}
+                </code>
+            </figure>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    {% for requisito in reqs %}
+    <div class="row requisito">
+      <article class="col-sm-2">
+        <h3>{{requisito.codice}}</h3>
+      </article>
+      <article class="col-sm-8">
+        <h3>{{requisito.descrizione}}</h3>
+      </article>
+      <article class="col-sm-2">
+        <a class=" btn btn-lg btn-success" href="/requisiti/{{requisito._id}}" role="button">Dettagli</a>
+      </article>
+    </div>
+    {% endfor %}
+  </section>
+  {% endfor %}
+</main>
+<script src="javascript/downloadLatex.js"></script>
+{% endblock %}

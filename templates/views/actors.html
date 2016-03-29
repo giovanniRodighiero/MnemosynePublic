@@ -1,0 +1,35 @@
+{% extends "layouts/base.html" %}
+
+{% block css%}
+  <link rel="stylesheet" href="/stylesheets/actors.css" media="screen" title="no title" charset="utf-8">
+{% endblock%}
+
+{% block content %}
+<header class="page-header">
+  <h1>Attori, <small>tutte le informazioni sugli attori protagonisti dei casi d'uso. <br>
+    <a class="btn-lg btn-success" href="keystone/actors" role="button">Gestisci Attori</a>
+  </small> </h1>
+</header>
+<main class="container-fluid">
+  <section class="row">
+    {% for attore in attori %}
+      <article class="attore col-md-4">
+        <h2>{{attore.nome}}</h2>
+        <h3>Descrizione:</h3>
+        <p>{{attore.descrizione}}</p>
+        <h3>Generalizza: </h3>
+        {% if attore.generalizza %}
+        <ul>
+          {% for generalizza in attore.generalizza %}
+          <li> <a href="keystone/actors/{{generalizza._id}}">{{ generalizza.nome }}</a></li>
+          {% endfor %}
+        </ul>
+        {% else %}
+            <p>Nessun attore</p>
+        {% endif %}
+        <a class="btn btn-default" href="keystone/actors/{{attore._id}}" role="button">Modifica</a>
+      </article>
+    {% endfor %}
+  </section>
+</main>
+{% endblock %}

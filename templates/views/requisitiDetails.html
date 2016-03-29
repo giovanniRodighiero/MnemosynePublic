@@ -1,0 +1,105 @@
+{% extends "layouts/base.html" %}
+{% import "stampe.html" as stampa %}
+
+{% block css%}
+  <link rel="stylesheet" href="/stylesheets/usecasesDetails.css" media="screen" title="no title" charset="utf-8">
+{% endblock%}
+
+{% block content %}
+<header class="page-header">
+  <h1>Requisito {{details.codice}} <br>
+    <a class="btn-lg btn-success" href="/keystone/requisitis/{{details._id}}" role="button">Modifica</a>
+  </h1>
+</header>
+<main class="container-fluid">
+<section id="info">
+  <div class="entry row">
+    <article class="nome col-md-3">
+      <h2>Priorità</h2>
+    </article>
+    <article class="contenuto col-md-9">
+      <h3>{{details.priorita}}</h3>
+    </article>
+  </div>
+  <div class="entry row">
+    <article class="nome col-md-3">
+      <h2>Tipologia</h2>
+    </article>
+    <article class="contenuto col-md-9">
+      <h3>{{details.tipologia}}</h3>
+    </article>
+  </div>
+  <div class="entry row">
+    <article class="nome col-md-3">
+      <h2>Numero</h2>
+    </article>
+    <article class="contenuto col-md-9">
+      <h3>{{details.numero}}</h3>
+    </article>
+  </div>
+  <div class="entry row">
+    <article class="nome col-md-3">
+      <h2>Descrizione</h2>
+    </article>
+    <article class="contenuto col-md-9">
+      <h3>{{details.descrizione}}</h3>
+    </article>
+  </div>
+  <div class="entry row">
+    <article class="nome col-md-3">
+      <h2>Fonti</h2>
+    </article>
+    <article class="contenuto col-md-9">
+      <div class="row">
+        <div class=" nome col-sm-6">
+          <h2>Casi d'uso</h2>
+          <ul>
+            {% for casi in details.fonti.usecases %}
+              <li><a href="/usecases/{{casi._id}}" target="_blank">UC{{casi.codice}}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class=" nome col-sm-6">
+          <h2>Altre Fonti</h2>
+          <ul>
+            {% for fonti in details.fonti.altro %}
+              <li><a href="/usecases/{{casi._id}}"></a>{{fonti.nome}}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+<section class="stampa">
+<header class="page-header">
+  <h2>Genera il codice LaTeX per questo requisito.</h2>
+</header>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+Genera LaTeX
+</button>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title">Requisito {{details.codice}}</h3>
+      </div>
+      <div class="modal-body">
+        <figure>
+            <code>
+                {{stampa.requisito(details)}}
+            </code>
+        </figure>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+  </section>
+</main>
+{% endblock %}
+<script src="javascript/downloadLatex.js"></script>

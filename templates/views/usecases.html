@@ -1,0 +1,66 @@
+{% extends "layouts/base.html" %}
+{% import "stampe.html" as stampa %}
+
+{% block css%}
+  <link rel="stylesheet" href="/stylesheets/usecases.css" media="screen" title="no title" charset="utf-8">
+{% endblock%}
+
+{% block content %}
+<header class="page-header">
+  <h1>Casi d'uso, <small>tutti i casi d'uso in memoria.</small> <br>
+    <a class="btn-lg btn-success" href="/keystone/use-cases" role="button">Aggiungi / Elimina</a>
+  </h1>
+</header>
+  <section class="stampa container-fluid">
+    <div class="row">
+      <article class="col-md-6 utility">
+        <h2>Diagrammi</h2>
+        <a class="btn btn-lg btn-warning" href="?download=usecases">Genera nuovo archivio</a>
+        <a class="btn btn-lg btn-success" id="archivio" href="https://cloudinary.com/console/media_library" target="_blank">.zip diagrammi</a>
+      </article>
+      <article class="col-md-6 utility">
+        <h2>Codice LaTeX</h2>
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+        Genera LaTeX
+        </button>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <button type="button" class="btn btn-success" onclick="download('casiuso.tex', '#content' );" id="create">Crea file da scaricare</button>
+          </div>
+          <div class="modal-body">
+            <h3 class="modal-title">Tutti i casi d'uso</h3>
+            <figure id="content">
+                <code >
+                  {% for casi in usecases %}
+                    %USECASE UC{{casi.codice}} <br>
+                    {{ stampa.UseCase(casi, stampaLista) }}
+                    <br><br>
+                  {% endfor %}
+                </code>
+            </figure>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+      </article>
+    </div>
+  </section>
+<main class="container-fluid">
+  <section class="row">
+    {% for casi in usecases %}
+      <article class="attore col-sm-2">
+        <h2><a href="/usecases/{{casi._id}}">UC{{casi.codice}}</a></h2>
+        <h3>{{casi.azione}}</h3>
+      </article>
+    {% endfor %}
+  </section>
+</main>
+<script src="javascript/downloadLatex.js"></script>
+
+{% endblock %}

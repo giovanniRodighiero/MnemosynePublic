@@ -1,0 +1,64 @@
+{% extends "layouts/base.html" %}
+{% import "stampe.html" as stampa %}
+
+{% block css%}
+  <link rel="stylesheet" href="/stylesheets/glossario.css" media="screen" title="no title" charset="utf-8">
+{% endblock%}
+
+
+{% block content %}
+<header class="page-header">
+  <h1>Glossario, <small>tutti i termini da inserire nel documento Glossario. <br>
+    <a class="btn-lg btn-success" href="keystone/glossarios" role="button">Gestisci Glossario</a>
+  </small> </h1>
+</header>
+<section id=stampa>
+  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalGlossario">
+  Genera LaTeX
+  </button>
+  <div class="modal fade" id="modalGlossario" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <button type="button" class="btn btn-success" id="createGlossario"
+            onclick="download('glossario.tex', '#contentGlossario' );">Crea file da scaricare</button>
+        </div>
+        <div class="modal-body">
+          <h3 class="modal-title">Glossario</h3>
+          <figure >
+              <code id="contentGlossario">
+               {{ stampa.Glossario(termini, getChar) }}
+              </code>
+          </figure>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+</section>
+<section id="termini" class="container-fluid">
+  <div class="row">
+    <article class="col-xs-3">
+      <h2>Termine</h2>
+    </article>
+    <article class="col-xs-9">
+      <h2>Definizione</h2>
+    </article>
+  </div>
+  {% for t in termini %}
+    <div class=" termine row">
+      <article class="col-xs-3">
+        <h3>{{t.termine}}</h3>
+      </article>
+      <article class="col-xs-9">
+        <h3>{{t.definizione}}</h3>
+      </article>
+    </div>
+  {% endfor %}
+</section>
+<script type="text/javascript" src="javascript/downloadLatex.js"></script>
+<script type="text/javascript" src="javascript/glossario.js"></script>
+{% endblock %}

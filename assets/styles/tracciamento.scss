@@ -1,0 +1,28 @@
+@import "base";
+
+.page-header{
+  text-align: center;
+}
+#menu ul li{
+  font-size: 1.5em;
+}
+#tracciamento{
+  margin-top:2em;
+}
+.requisito{
+  border-bottom: 1px solid black;
+}
+.tipo h2{
+  border-bottom: 1px solid #eee;
+}
+.row h3{
+  margin: 0px;
+}
+.row{
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  margin-bottom: 2px;
+}
+.row p{
+  margin: 0px;
+}

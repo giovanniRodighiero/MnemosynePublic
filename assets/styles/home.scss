@@ -1,0 +1,20 @@
+@import "base";
+
+header{
+  text-align: center;
+  padding-bottom: 1em;
+}
+main{
+  text-align: center;
+}
+.row{
+  margin-left: 6em;
+}
+article{
+  padding: 1em;
+  margin: 0.5em;
+  background-color: #eee;
+}
+article img{
+  width: 10em;
+}

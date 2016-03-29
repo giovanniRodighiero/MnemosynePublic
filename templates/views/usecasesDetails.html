@@ -1,0 +1,150 @@
+{% extends "layouts/base.html" %}
+{% import "stampe.html" as stampa %}
+{% block css%}
+  <link rel="stylesheet" href="/stylesheets/usecasesDetails.css" media="screen" title="no title" charset="utf-8">
+{% endblock%}
+
+{% block content %}
+<header class="page-header">
+  <h1>Caso d'uso UC{{details.codice}} <small>{{details.azione}}</small> <br>
+    <a class="btn-lg btn-success" href="/keystone/use-cases/{{details._id}}" role="button">Modifica</a>
+  </h1>
+</header>
+<main class="container-fluid">
+  <div class="row">
+    <section class="useCase col-sm-6">
+      <div class="entry row">
+        <article class="nome col-md-3">
+          <h2>Codice</h2>
+        </article>
+        <article class="contenuto col-md-9">
+          <h3>UC {{details.codice}}</h3>
+        </article>
+      </div>
+      <div class="entry row">
+        <article class="nome col-md-3">
+          <h2>Nome</h2>
+        </article>
+        <article class="contenuto col-md-9">
+          <h3>{{details.nome}}</h3>
+        </article>
+      </div>
+      <div class="entry row">
+        <article class="nome col-md-3">
+          <h2>Azione</h2>
+        </article>
+        <article class="contenuto col-md-9">
+          <h3>{{details.azione}}</h3>
+        </article>
+      </div>
+      <div class="entry row">
+        <article class="nome col-md-3">
+          <h2>Attori Primari</h2>
+        </article>
+        <article class="contenuto col-md-9">
+          {% for attore in details.attoriPrimari%}
+            <h3>{{attore.nome}}</h3>
+          {% endfor%}
+        </article>
+      </div>
+      <div class="entry row">
+        <article class="nome col-md-3">
+          <h2>Attori Secondari</h2>
+        </article>
+        <article class="contenuto col-md-9">
+          {% for attore in details.attoriSecondari%}
+            <h3>{{attore.nome}}</h3>
+          {% endfor%}
+        </article>
+      </div>
+      <div class="entry row">
+        <article class="nome col-md-3">
+          <h2>Scopo e Descrizione</h2>
+        </article>
+        <article class="contenuto col-md-9">
+          <h3>{{details.descrizione}}</h3>
+        </article>
+      </div>
+      <div class="entry row">
+        <article class="nome col-md-3">
+          <h2>Pre condizione</h2>
+        </article>
+        <article class="contenuto col-md-9">
+          <h3>{{details.precondizione}}</h3>
+        </article>
+      </div>
+      <div class="entry row">
+        <article class="nome col-md-3">
+          <h2>Post condizione</h2>
+        </article>
+        <article class="contenuto col-md-9">
+          <h3>{{details.postcondizione}}</h3>
+        </article>
+      </div>
+      <div class="entry row">
+        <article class="nome col-md-3">
+          <h2>Flusso Principale</h2>
+        </article>
+        <article class="contenuto col-md-9">
+          <ol>
+            {% for flusso in details.flussoPrincipale%}
+            <li><h3>{{flusso.azione}} <a href="/usecases/{{flusso._id}}">(UC{{flusso.codice}})</a></h3></li>
+            {% endfor%}
+          </ol>
+        </article>
+      </div>
+      <div class="entry row">
+        <article class="nome col-md-3">
+          <h2>Estensioni</h2>
+        </article>
+        <article class="contenuto col-md-9">
+          {% if details.estensioneUseCase %}
+          <ol>
+            {% for estensione in details.estensioneUseCase%}
+            <li><h3>{{estensione.azione}} <a href="/usecases/{{flusso._id}}">(UC{{estensione.codice}})</a></h3></li>
+            {% endfor%}
+          </ol>
+          {% endif %}
+            <h3>{{ details.estensioneTesto }}</h3>
+        </article>
+      </div>
+    </section>
+    <section class="diagramma col-sm-6">
+      <img src="{{details.diagramma.secure_url}}" class="img-responsive" alt="" />
+    </section>
+  </div>
+  <section class="stampa">
+    <header class="page-header">
+      <h2>Genera il codice LaTeX per questo caso d'uso.</h2>
+    </header>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+    Genera LaTeX
+    </button>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title">Use Case: UC{{details.codice}}</h3>
+      </div>
+      <div class="modal-body">
+        <figure>
+            <code>
+              {{ stampa.UseCase(details, stampaLista) }}
+            </code>
+        </figure>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+  </section>
+</main>
+{% endblock %}
+
+{% block js %}
+<script src="/javascript/bootstrap.min.js"></script>
+{% endblock %}

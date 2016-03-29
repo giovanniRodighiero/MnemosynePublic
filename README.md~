@@ -13,6 +13,3 @@ Mnemosyne can be used for:
 
 
 All the informations stored are exportable as cvs file and functions for LaTeX code generation are available as well.
-
-## Tecnologies and languages involved
-The core is build through the CMS [Keystone.js](http://keystonejs.com/) which is based on express.js and MongoDB, indeed the database is a MongoDB instance. 

@@ -1,0 +1,129 @@
+{% extends "layouts/base.html" %}
+{% import "stampe.html" as stampa %}
+
+{% block css%}
+  <link rel="stylesheet" href="/stylesheets/tracciamento.css" media="screen" title="no title" charset="utf-8">
+{% endblock%}
+
+{% block content %}
+<header class="page-header">
+  <h1>Tracciamento, <small> risultati tracciamento tra requisiti-fonti e fonti-requisiti.<br>
+    <a class="btn-lg btn-success" href="keystone/requisitis" role="button">Gestisci Requisiti</a>
+    <a class="btn-lg btn-success" href="keystone/fontis" role="button">Gestisci Fonti</a>
+    <a class="btn-lg btn-success" href="keystone/usecases" role="button">Gestisci Casi d'uso</a>
+  </small> </h1>
+</header>
+<main>
+  <section class="container-fluid">
+    <h2>Requisiti - Fonti</h2>
+    {% for req in requisiti %}
+      <article class="row">
+        <div class="col-sm-2">
+          <h3><a href="/requisiti/{{req._id}}">{{req.codice}}</a></h3>
+        </div>
+        <div class="col-sm-5">
+          <p>{{req.descrizione}}</p>
+        </div>
+        <div class="col-sm-5">
+            <p>
+              {% for doc in req.fonti.altro %}
+                <a href="/keystone/fontis/{{doc._id}}">{{doc.nome}}</a>,
+              {% endfor %}
+              {% for doc in req.fonti.usecases %}
+                {% if loop.last %}
+                  <a href="/usecases/{{doc._id}}">UC{{doc.codice}}</a>.
+                {% else %}
+                  <a href="/usecases/{{doc._id}}">UC{{doc.codice}}</a>.
+                {% endif %}
+              {% endfor %}
+            </p>
+        </div>
+      </article>
+    {% endfor %}
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#requisitiFonti">
+    Genera LaTeX
+    </button>
+    <div class="modal fade" id="requisitiFonti" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <button type="button" class="btn btn-success" onclick="download('tracciamentoReqFonti.tex', '#contentReqFonti' );"
+             id="create">Crea file da scaricare</button>
+          </div>
+          <div class="modal-body">
+            <h3 class="modal-title">Tracciamento Requisiti - Fonti</h3>
+            <figure id="contentReqFonti">
+                <code>
+                  {{ stampa.AllTracciamentoReqFonti(requisiti) }}
+                </code>
+            </figure>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+  </section>
+  <section class="container-fluid">
+    <h2>Fonti - Requisiti</h2>
+    {% for tracc in tracciamentoDoc %}
+    <article class="row">
+      <div class="col-sm-4">
+        <h3><a href="/keystone/fontis/{{tracc.fonte._id}}">{{tracc.fonte.nome}}</a></h3>
+      </div>
+      <div class="col-sm-8">
+          <p>
+            {% for req in tracc.requisito %}
+            <a href="/requisiti/{{req._id}}">{{req.codice}}</a>,
+            {% endfor %}
+          </p>
+      </div>
+    </article>
+    {% endfor %}
+    {% for tracc in tracciamentoCasi %}
+    <article class="row">
+      <div class="col-sm-4">
+        <h3><a href="/usecases/{{tracc.fonte._id}}">UC{{tracc.fonte.codice}}</a></h3>
+      </div>
+      <div class="col-sm-8">
+          <p>
+            {% for req in tracc.requisito %}
+              <a href="/requisiti/{{req._id}}">{{req.codice}}</a>,
+            {% endfor %}
+          </p>
+      </div>
+    </article>
+    {% endfor %}
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#fontiRequisiti">
+    Genera LaTeX
+    </button>
+    <div class="modal fade" id="fontiRequisiti" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <button type="button" class="btn btn-success" onclick="download('tracciamentoFontiReq.tex', '#contentFontiReq' );"
+             id="create">Crea file da scaricare</button>
+            <a download="tracciamentoReqFonti.tex" id="downloadlink" style="display: none">Download</a>
+          </div>
+          <div class="modal-body">
+            <h3 class="modal-title">Tracciamento Fonti - Requisiti</h3>
+            <figure id="contentFontiReq">
+                <code>
+                  {{ stampa.AllTracciamentoFontiReq(tracciamentoDoc,tracciamentoCasi) }}
+                </code>
+            </figure>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+  </section>
+</main>
+<script src="javascript/downloadLatex.js"></script>
+
+{% endblock %}

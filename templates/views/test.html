@@ -1,0 +1,78 @@
+{% extends "layouts/base.html" %}
+{% import "stampe.html" as stampa %}
+{% block css%}
+  <link rel="stylesheet" href="/stylesheets/test.css" media="screen" title="no title" charset="utf-8">
+{% endblock%}
+
+{% block content %}
+<header class="page-header">
+  <h1>Test, <small>tutte le informazioni sui test pianificati. </small> </h1>
+</header>
+<main class="container-fluid">
+      <section class="test">
+        <h2>Test di Sistema</h2>
+        <a class="btn-lg btn-success" href="keystone/test-sistemas" role="button">Gestisci Test Sistema</a>
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalSistema">
+        Genera LaTeX
+        </button>
+        <div class="row">
+        {% for test in testSistema %}
+          <div class="col-xs-2">
+            <h3>{{test.codice}}</h3>
+          </div>
+          <div class="col-xs-5">
+            <h3>{{test.descrizione}}</h3>
+          </div>
+          <div class="col-xs-3">
+            <h3>{{test.stato}}</h3>
+          </div>
+          <div class="col-xs-2">
+            {% for requisito in test.requisiti %}
+            <h3><a href="requisiti/{{requisito._id}}">{{requisito.codice}}</a></h3>
+            {% endfor %}
+          </div>
+        {% endfor %}
+          </div>
+      </section>
+      <div class="modal fade" id="modalSistema" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <button type="button" class="btn btn-success" id="createSistema"
+                onclick="download('testSistema.tex', '#contentSistema' );">Crea file da scaricare</button>
+            </div>
+            <div class="modal-body">
+              <h3 class="modal-title">Test di Sistema</h3>
+              <figure >
+                  <code id="contentSistema">
+                    {{ stampa.TestSistema(testSistema) }}
+                  </code>
+              </figure>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+      <section class="test">
+        <h2>Test di Validazione</h2>
+      </section>
+      <!--
+  <section id="tracciamento">
+    <h2>Tracciamento</h2>
+      <div class="row">
+        {% for item in trSistReq %}
+          <article class="col-xs-6">
+            <h3>{{item}}</h3>
+          </article>
+          <article class="col-xs-6">
+            <h3>{{trSistTest[loop.index0]}}</h3>
+          </article>
+        {% endfor %}
+      </div>
+  </section>-->
+  <script src="javascript/downloadLatex.js"></script>
+</main>
+{% endblock %}

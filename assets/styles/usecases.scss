@@ -1,0 +1,42 @@
+@import "base";
+
+header{
+  text-align: center;
+}
+.row{
+  margin-left: 6em;
+}
+.attore{
+  background-color: #eee;
+  padding: 1em;
+  margin: 0.5em;
+}
+.attore h2{
+  margin: 0px;
+  font-size: 1.5em;
+}
+.attore h3{
+  margin: 0px;
+  font-size: 1.2em;
+}
+.stampa{
+  //text-align: center;
+  padding-bottom: 2em;
+}
+.stampa a {
+  margin: 0.5em;
+}
+.utility{
+  padding-bottom: 0.5em;
+  border-left: 1px solid #eee;
+}
+.modal-body {
+  text-align: left;
+}
+.modal-body ol{
+  text-align: left;
+    -webkit-user-select: all; /* Chrome/Safari */
+    -moz-user-select: all; /* Firefox */
+    -ms-user-select: all; /* IE10+ */
+
+}
