@@ -8,7 +8,7 @@ I'm still working on it and improving the functionalities right now.
 
 ## What it can do
 Mnemosyne can be used for:
-* Store information about a use case with a image of his UML diagram as well;
+* Store information about a use case with an image of his UML diagram as well;
 * Store information about requirments, divided into different categories;
 * Store information about tests pianification, divided on different types (unit tests, integration tests, system tests, validation tests) for your code and the result of them;
 * Store all the words that deserve to appear in a glossary;
